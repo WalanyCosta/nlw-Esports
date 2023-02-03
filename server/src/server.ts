@@ -2,6 +2,8 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 
 const app = express();
+app.use(express.json());
+
 const prisma = new PrismaClient({
     log: ['query']
 });
@@ -48,6 +50,25 @@ app.get('/games/:id/ads', async (request, response) => {
         }
     }))
 })
+
+app.get('/ads/:id/discord', async (request, response) => {
+    const adId = request.params.id;
+
+    const { discord } = await prisma.ad.findUniqueOrThrow({
+        select: {
+            discord: true
+        },
+        where: {
+            id: adId,
+        }
+    })
+
+    return response.json({
+        discord
+    })
+})
+
+
 
 app.listen(3333, ()=>{
     console.log('Servidor rodando...')
