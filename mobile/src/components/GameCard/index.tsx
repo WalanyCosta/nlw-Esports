@@ -10,10 +10,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { THEME } from '../../theme';
 
 export type GameCardProps = {
-  id: string;
-  name: string;
-  ads: string;
-  cover: ImageSourcePropType;
+  id: string,
+  nome: string,
+  bannerUrl: string;
+  _count: {
+    ads: number
+  };
 }
 
 interface Props extends TouchableOpacityProps{
@@ -25,7 +27,7 @@ export function GameCard({ data, ...rest }:Props) {
     <TouchableOpacity style={styles.container} {...rest}>
       <ImageBackground
         style={styles.cover}
-        source={data.cover}
+        source={{uri: data.bannerUrl}}
       >
 
       <LinearGradient
@@ -33,11 +35,11 @@ export function GameCard({ data, ...rest }:Props) {
         style={styles.footer}
       >
         <Text style={styles.name}>
-           {data.name}
+           {data.nome}
         </Text>
 
         <Text style={styles.ads}>
-            {data.ads} anúncios
+            {data._count.ads} anúncios
         </Text>
       </LinearGradient>
       </ImageBackground>
