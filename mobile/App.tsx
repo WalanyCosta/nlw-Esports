@@ -6,9 +6,9 @@ import {
   Inter_700Bold,
   Inter_900Black
 } from '@expo-google-fonts/inter';
-import { Background } from './src/components/Background';
-import { Home } from './src/screens/Home';
-import { Loading } from './src/components/Loading';
+import { Background, Loading } from './src/components';
+import { Routes } from './src/routes';
+
 
 export default function App() {
 
@@ -26,20 +26,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Home/> : <Loading/>}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </Background>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 20
-  }
-});
