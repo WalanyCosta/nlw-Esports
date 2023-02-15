@@ -2,8 +2,7 @@ import {useState, useEffect} from 'react';
 import { styles } from './styles';
 import { View, Image, FlatList } from 'react-native';
 import logoImg from '../../assets/logo-nlw-esports.png';
-import { Heading } from '../../components/Heading';
-import { GameCard, GameCardProps } from '../../components/GameCard';
+import { GameCard, GameCardProps, Heading } from '../../components';
 
 export function Home() {
   const [games, setGames] = useState<GameCardProps[]>([]);
