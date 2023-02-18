@@ -8,8 +8,8 @@ import { THEME } from '../../theme';
 import { styles } from './styles';
 
 import logoImg  from '../../assets/logo-nlw-esports.png';
-import { Background, DuoCard, Heading } from '../../components';
 
+import { Background, DuoCard, DuoMatch, Heading } from '../../components';
 import { GameParams } from '../../@types/navigation';
 import { DuoCardProps } from './../../components/DuoCard/index';
 
@@ -19,18 +19,24 @@ export function Game() {
   const route = useRoute();
   const navegation = useNavigation();
   const game = route.params as GameParams;
-  
+  const [duos, SetDuos] = useState<DuoCardProps[]>([]);
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('')
+
   function handleGoBack(){
     navegation.goBack();
   }
 
-  const [duos, SetDuos] = useState<DuoCardProps[]>([]);
+  function getDiscordUser(adsId: string){
+    fetch(`http://192.168.8.100:3333/ads/${adsId}/discord`)
+      .then(response=> response.json())
+      .then(data => setDiscordDuoSelected(data.discord));
+  }
 
-    useEffect(()=>{
-        fetch(`http://192.168.8.100:3333/games/${game.id}/ads`)
-        .then(response=> response.json())
-        .then(data => SetDuos(data));
-    },[duos]);
+  useEffect(()=>{
+      fetch(`http://192.168.8.100:3333/games/${game.id}/ads`)
+      .then(response=> response.json())
+      .then(data => SetDuos(data));
+  },[duos]);
 
   return (
     <Background>
@@ -68,7 +74,7 @@ export function Game() {
           renderItem={({item}) => (
             <DuoCard 
             data={item} 
-            onConnect={() => [ ]}
+            onConnect={() => getDiscordUser(item.id)}
             />
           )}
           horizontal
@@ -80,6 +86,12 @@ export function Game() {
               Não há anúncios publicados ainda.
             </Text>
           )}
+        />
+
+        <DuoMatch 
+          visible={discordDuoSelected.length > 0}
+          discord={discordDuoSelected}
+          onclose={()=> setDiscordDuoSelected('')}
         />
       </SafeAreaView> 
     </Background>
