@@ -6,6 +6,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Input from './Form/input';
 import { Game } from '../App';
 import axios from 'axios';
+import Select from './Form/select';
 
 type Prop = {
     data: Game[];
@@ -63,19 +64,7 @@ function CreateAdModel({ data }: Prop) {
               <form action="" className="mt-8 flex flex-col gap-4" onSubmit={handleCreateAd}>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="game" className="font-semibold">Qual o game? </label>
-                  <select
-                    name="game"
-                    id="game"
-                    defaultValue=""
-                    className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500 appearance-none"
-                  >
-                    <option disabled value="">Selecione o game que deseja jogar</option>
-                    {
-                        data.map(game =>{
-                         return <option key={game.id} value={game.id}>{game.nome}</option>
-                        })
-                    }
-                  </select>
+                  <Select games={data} />
                 </div>
                 
                 <div className="flex flex-col gap-2">
