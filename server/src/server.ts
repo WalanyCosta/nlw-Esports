@@ -12,5 +12,5 @@ app.use(adRouter)
 app.use(gameRouter)
 
 app.listen(3333, ()=>{
-    console.log('Servidor rodando...')
+    console.log('Servidor está rodando na port:3333')
 })
